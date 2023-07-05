@@ -1,0 +1,19 @@
+
+version: '2.1'
+
+services:
+  
+  # ------------------------------------------------------------------------------------
+  # HiveMQ Edge
+  # ------------------------------------------------------------------------------------
+  hivemq-edge:
+    image: hivemq/hivemq-edge:latest
+    ports:
+      - 1883:1883 # MQTT/TCP protocol port
+      - 8080:8080 # HiveMQ Edge port
+    volumes:
+      - hivemq_log:/opt/hivemq/log                       # Persist log data
+    
+volumes:
+  hivemq_log:
+
