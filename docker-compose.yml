@@ -2,17 +2,29 @@
 version: '2.1'
 
 services:
+
   
   # ------------------------------------------------------------------------------------
   # HiveMQ Edge
+  # docker run --name hivemq-edge -e HIVEMQ_LOG_LEVEL=INFO -d -p 1883:1883 -p 8080:8080 hivemq/hivemq-edge
   # ------------------------------------------------------------------------------------
   hivemq-edge:
-    image: hivemq/hivemq-edge:latest
+    image: hivemq/hivemq-edge
+    restart: always
     ports:
-      - 1883:1883 # MQTT/TCP protocol port
-      - 8080:8080 # HiveMQ Edge port
+       - 1883:1883                     # MQTT/TCP protocol port
+       - 8080:8080                     # HiveMQ Edge port
+    #   - 2442:2442                     # MQTTSN
     volumes:
-      - hivemq_log:/opt/hivemq/log                       # Persist log data
+      - hivemq_log:/opt/hivemq/log      # Persist log data
+    labels:
+        io.balena.features.dbus: '1'
+        io.balena.features.sysfs: '1'
+        io.balena.features.supervisor-api: '1'
+        io.balena.features.balena-api: '1'
+        io.balena.features.balena-socket: '1'
+        io.balena.features.kernel-modules: '1'
+        io.balena.features.firmware: '1'
     
 volumes:
   hivemq_log:
